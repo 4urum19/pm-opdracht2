@@ -6,6 +6,22 @@
 
 using namespace std;
 
+void lenCalc(int getal, int & len) {
+	while (getal > 0) {
+		getal /= 10;
+		len++;
+	}
+}
+
+int * numConv(int getal, int & len, int arr[]) {
+	int locGetal = getal;
+	for (int i = len - 1; i >= 0; i--) {
+		arr[i] = getal % 10;
+		getal /= 10;
+	}
+	return arr;
+}
+
 bool palindrome(int *p, int len) {
 	int locLen = len - 1;
 	int numb = 0;
@@ -25,21 +41,14 @@ bool palindrome(int *p, int len) {
 }
 
 int main() {
-	int	locGetal, getal;
+	int getal, *p;
 	int len = 0;
-	cout << "Vul een getal in: \n";
-	cin >> locGetal;
-	getal = locGetal;
-	while(locGetal > 0) {
-		locGetal /= 10;
-		len++;
-	}
-	int arr[len] = {};
-	for (int i = len - 1; i >= 0; i--){
-		arr[i] = getal % 10; 
-		getal /= 10;
-	}
-	int *p = arr;
+	cout << "Voer een getal in: \n";
+	cin >> getal;
+	lenCalc(getal, len);
+	int arr[len] = { };
+	p = numConv(getal, len, arr);
+	std::cout << p << '\n';
 	if (palindrome(p, len)) {
 		cout << "True\n";
 	}
