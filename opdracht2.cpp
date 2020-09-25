@@ -1,31 +1,11 @@
-
 /*lajdlf;kasjdf;laksjdf */
 #include <iostream>
 #include <fstream>
-#include <cstdlib> //voor exit
-#include <string>
 #include <climits>
 #include <cmath>
 
 using namespace std;
 
-void input(string inputfile){ //functie voor de input en output van een file
-        ifstream invoer;
-        ofstream uitvoer;
-        char kar;
-        invoer.open (inputfile,ios::in); // koppel invoer aan file
-        if ( ! invoer ) {
-            cout << "File niet geopend" << endl;
-            exit (1); // stopt het programma;
-        } // if
-        uitvoer.open ("uitvoer.txt",ios::out);
-        kar = invoer.get ( );
-        while ( ! invoer.eof ( ) ) {
-            uitvoer.put (kar);
-            kar = invoer.get ( );
-        } // while
-        invoer.close ( );
-        uitvoer.close ( );
 void lenCalc(int getal, int & len) {
 	while (getal > 0) {
 		getal /= 10;
@@ -33,10 +13,6 @@ void lenCalc(int getal, int & len) {
 	}
 }
 
-int main() {
-string inputfile = "invoer.txt";
-input(inputfile);
-return 0;
 int * numConv(int getal, int len, int arr[]) {
 	int locGetal = getal;
 	for (int i = len - 1; i >= 0; i--) {
