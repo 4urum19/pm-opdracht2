@@ -29,6 +29,13 @@ int * numConv(int getal, int len, int arr[]) {
 	return arr;
 } //numConv
 
+int pointerToInt(int & getal, int len, int *p) {
+	for (int i = len - 1; i >= 0; i--) {
+		getal += *(p + 1) * pow(10, i);
+	}
+	return getal;
+}
+
 bool palindrome(int *p, int len) {
 	int locLen = len - 1;
 	int numb = 0;
@@ -96,6 +103,10 @@ void input(){ //functie voor in- en output van file
         uitvoer.open ("uitvoer.txt",ios::out);
         kar = invoer.get ( );
         int karteller = 1;
+        
+        int len = 0, getal = 0;
+        int inpArr[10] = { };
+
         while ( ! invoer.eof ( ) ) {
             char vorigekar = kar; //bewaar het voorgaande karakter
             kar = invoer.get ( );
@@ -106,6 +117,14 @@ void input(){ //functie voor in- en output van file
                 if ((vorigekar >= 48 && vorigekar <= 57)
                     || (vorigekar == 92)){ //cijfer of \?
                     uitvoer << '\\';
+                	while (vorigekar >= 48 && vorigekar <= 57) {
+                		inpArr[len] = vorigekar;
+                		len++;
+                		kar = invoer.get();
+                	}
+                	int *p = inpArr;
+                	pointerToInt(getal, len, p);
+                	lychrelNumb(p, getal, len);
                 }
                 if (karteller == 1){ //kwam het karakter 1 keer voor?
                     uitvoer.put (vorigekar); //laat het cijfer weg
@@ -122,11 +141,6 @@ void input(){ //functie voor in- en output van file
 }
 
 int main() {
-	int getal, *p;
-	int len = 0;
-	cout << "Voer een getal in: \n";
-	cin >> getal;
-	lychrelNumb(p, getal, len);
 	input();
 	return 0;
 } //main
