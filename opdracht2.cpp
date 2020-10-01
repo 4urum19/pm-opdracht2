@@ -90,16 +90,9 @@ bool lychrelNumb(int *p, int getal, int len) {
 	return false;
 } //lychrelNumb
 
-void input(){ //functie voor in- en output van file
-    string inputfile, outputfile;
+void codeer(string inputfile, string outputfile){ //functie voor in- en output van file
     char kar; 
     char vorigekar = '\\';
-
-	cout << "Geef uw inputfile + extensie\n";
-	cin >> inputfile;
-	cout << "Geef uw outputfile + extensie\n";
-	cin >> outputfile;
-	cout << '\n';
 
 	ifstream invoer (inputfile, std::ios::in);
 	ofstream uitvoer (outputfile, std::ios::out);
@@ -155,6 +148,23 @@ void input(){ //functie voor in- en output van file
     } //while
     invoer.close ( );
     uitvoer.close ( );
+}
+
+void input() {
+	string inputfile, outputfile;
+	char choice;
+
+	cout << "Geef uw inputfile + extensie\n";
+	cin >> inputfile;
+	cout << "Geef uw outputfile + extensie\n";
+	cin >> outputfile;
+	cout << "Wilt u coderen of decoderen? (c of d)\n";
+	cin >> choice;
+	cout << '\n';
+
+	if (choice == 'c') {
+		codeer(inputfile, outputfile);
+	}	
 }
 
 int main() {
