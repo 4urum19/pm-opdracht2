@@ -77,7 +77,7 @@ bool lychrelNumb(int *p, int getal, int len) {
 		} //for
 		if (palindrome(p, len)) {
 			cout << origgetal << " is geen lychrelgetal\n"
-				 << "Dit werd duidelijk na " << it << " iteraties\n";
+				 << "Dit werd duidelijk na " << it << " iteraties\n\n";
 			return true;
 			break;
 		} //if
@@ -93,7 +93,7 @@ bool lychrelNumb(int *p, int getal, int len) {
 		} //else
 	} //while
 	cout << origgetal << " is een lychrelkandidaat\n"
-		 << "Omdat er na " << it << " INT_MAX werd bereikt\n";
+		 << "Omdat er na " << it << " iteraties, INT_MAX werd bereikt\n\n";
 	return false;
 } //lychrelNumb
 
@@ -140,6 +140,10 @@ void codeer(string inputfile, string outputfile){
                		uitvoer.put(vorigekar);
                		if (karteller > 1) {
                			uitvoer << karteller;
+               			karteller = 1;
+               		}
+               		else if (karteller = 1 && kar == '\\') {
+               			uitvoer.put('\\');
                			karteller = 1;
                		}
              	}
