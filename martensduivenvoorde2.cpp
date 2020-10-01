@@ -1,7 +1,9 @@
-/*  Kristian Martens (S) & Walt Duivenvoorde (S2499452)
+/*  Christian Martens (S2983001) & Walt Duivenvoorde (S2499452)
 	martensduivenvoorde2.cpp
-	Het programma codeert of decodeert een input text file gegeven door de user
-	Bij coderen checkt het programma elk getal in de input file of het een lychrel getal is.
+	Het programma codeert of decodeert een input text file gegeven
+	door de user.
+	Bij coderen checkt het programma elk getal in de input file of
+	het een lychrel getal is.
 	Laatst gewerkt op 1-10-2020
 */
 #include <iostream>
@@ -95,13 +97,14 @@ bool lychrelNumb(int *p, int getal, int len) {
 	return false;
 } //lychrelNumb
 
-void codeer(string inputfile, string outputfile){ //functie voor in- en output van file
-    char kar; 
+//functie voor in- en output van file
+void codeer(string inputfile, string outputfile){
+    char kar;
     char vorigekar = '\\';
 
 	ifstream invoer (inputfile, ios::in);
 	ofstream uitvoer (outputfile, ios::out);
-    
+
     kar = invoer.get ( );
 
     while ( ! invoer.eof ( ) ) {
@@ -164,13 +167,14 @@ void decodeer(string inputfile, string outputfile) {
 	ofstream uitvoer (outputfile, ios::out);
 
 	curChar = invoer.get();
-	while(!invoer.eof()) {	
+	while(!invoer.eof()) {
 		if(curChar == '\\' && prevChar != '\\') {
 			pprevChar = prevChar;
 			prevChar = curChar;
 			curChar = invoer.get();
 		}
-		else if ((prevChar != '\\' || (prevChar == '\\' && pprevChar == '\\')) 
+		else if ((prevChar != '\\' || (prevChar == '\\'
+                                 && pprevChar == '\\'))
 				&& (curChar >= '0' && curChar <= '9')) {
 			amount = curChar - '0';
 			curChar = invoer.get();
@@ -215,18 +219,20 @@ void input() {
 	}
 	else {
 		cout << "Vul een juiste letter in.\n";
-	}	
+	}
 }
 
 int main() {
-	std::cout << "Gemaakt door Kristian Martens en Walt Duivenvoorde\n"
+	std::cout << "Gemaakt door Christian Martens en Walt Duivenvoorde\n"
 			  << "Jaar van aankomst: 2020\n"
 			  << "Studierichting: Informatica\n"
-			  << "Studentnummer: S(Kristian) & S2499452\n"
+			  << "Studentnummer: S2983001 & S2499452\n"
 			  << "Opdracht 2: DeCoderen\n"
-			  << "De user wordt gevraagd een txt file in te voeren waarna deze wordt gecodeerd,\n"
+			  << "De user wordt gevraagd een txt file in te voeren "
+			  << "waarna deze wordt gecodeerd,\n"
 			  << "Of gedecodeerd naar de users keuze.\n"
-			  << "In het geval van coderen wordt er gekeken of getallen in de file lychrel getallen zijn\n"
+			  << "In het geval van coderen wordt er gekeken of "
+			  << "getallen in de file lychrel getallen zijn\n"
 			  << "Laatst bewerkt op 1-10-2020\n"
 			  << "______________________________\n";
 	input();
