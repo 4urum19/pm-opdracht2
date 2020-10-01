@@ -1,4 +1,9 @@
-/*lajdlf;kasjdf;laksjdf */
+/*  Kristian Martens (S) & Walt Duivenvoorde (S2499452)
+	martensduivenvoorde2.cpp
+	Het programma codeert of decodeert een input text file gegeven door de user
+	Bij coderen checkt het programma elk getal in de input file of het een lychrel getal is.
+	Laatst gewerkt op 1-10-2020
+*/
 #include <iostream>
 #include <climits>
 #include <fstream>
@@ -94,8 +99,8 @@ void codeer(string inputfile, string outputfile){ //functie voor in- en output v
     char kar; 
     char vorigekar = '\\';
 
-	ifstream invoer (inputfile, std::ios::in);
-	ofstream uitvoer (outputfile, std::ios::out);
+	ifstream invoer (inputfile, ios::in);
+	ofstream uitvoer (outputfile, ios::out);
     
     kar = invoer.get ( );
 
@@ -151,8 +156,40 @@ void codeer(string inputfile, string outputfile){ //functie voor in- en output v
 }
 
 void decodeer(string inputfile, string outputfile) {
-	ifstream invoer (inputfile, std::ios::in);
-	ofstream uitvoer (outputfile, std::ios::out);
+	char pprevChar = 'x';
+	char prevChar = 'x';
+	char curChar;
+	int amount = 0;
+	ifstream invoer (inputfile, ios::in);
+	ofstream uitvoer (outputfile, ios::out);
+
+	curChar = invoer.get();
+	while(!invoer.eof()) {	
+		if(curChar == '\\' && prevChar != '\\') {
+			pprevChar = prevChar;
+			prevChar = curChar;
+			curChar = invoer.get();
+		}
+		else if ((prevChar != '\\' || (prevChar == '\\' && pprevChar == '\\')) 
+				&& (curChar >= '0' && curChar <= '9')) {
+			amount = curChar - '0';
+			curChar = invoer.get();
+			while (curChar >= '0' && curChar <= '9') {
+				amount *= 10;
+				amount += curChar - '0';
+				curChar = invoer.get();
+			}
+			for(int i = 0; i < amount - 1; i++) {
+				uitvoer.put(prevChar);
+			}
+		}
+		else {
+			uitvoer.put(curChar);
+			pprevChar = prevChar;
+			prevChar = curChar;
+			curChar = invoer.get();
+		}
+	}
 
 	invoer.close();
 	uitvoer.close();
@@ -182,6 +219,16 @@ void input() {
 }
 
 int main() {
+	std::cout << "Gemaakt door Kristian Martens en Walt Duivenvoorde\n"
+			  << "Jaar van aankomst: 2020\n"
+			  << "Studierichting: Informatica\n"
+			  << "Studentnummer: S(Kristian) & S2499452\n"
+			  << "Opdracht 2: DeCoderen\n"
+			  << "De user wordt gevraagd een txt file in te voeren waarna deze wordt gecodeerd,\n"
+			  << "Of gedecodeerd naar de users keuze.\n"
+			  << "In het geval van coderen wordt er gekeken of getallen in de file lychrel getallen zijn\n"
+			  << "Laatst bewerkt op 1-10-2020\n"
+			  << "______________________________\n";
 	input();
 	return 0;
 } //main
