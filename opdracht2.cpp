@@ -1,7 +1,8 @@
 /*lajdlf;kasjdf;laksjdf */
 #include <iostream>
-#include <fstream>
 #include <climits>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -30,8 +31,10 @@ int * numConv(int getal, int len, int arr[]) {
 } //numConv
 
 int pointerToInt(int & getal, int len, int *p) {
-	for (int i = len - 1; i >= 0; i--) {
-		getal += *(p + 1) * pow(10, i);
+	int locPow = len - 1;
+	for (int i = 0; i < len; i++) {
+		getal += *(p + i) * pow(10, locPow);
+		locPow--;
 	}
 	return getal;
 }
@@ -58,7 +61,6 @@ bool palindrome(int *p, int len) {
 bool lychrelNumb(int *p, int getal, int len) {
 	int origgetal = getal;
 	int it = 0;
-	lenCalc(getal, len);
 	int arr[len] = { };
 	p = numConv(getal, len, arr);
 	while(true) {
@@ -72,9 +74,7 @@ bool lychrelNumb(int *p, int getal, int len) {
 			return true;
 			break;
 		} //if
-		std::cout << getal << " + " << revNumb << " = ";
 		getal += revNumb;
-		std::cout << getal << '\n';
 		if (getal > 0 && getal < 100000000) {
 			len = 0;
 			lenCalc(getal, len);
@@ -91,53 +91,70 @@ bool lychrelNumb(int *p, int getal, int len) {
 } //lychrelNumb
 
 void input(){ //functie voor in- en output van file
-        string inputfile = "invoer.txt";
-        ifstream invoer;
-        ofstream uitvoer;
-        char kar;
-        invoer.open (inputfile,ios::in); //koppel invoer aan file
-        if ( ! invoer ) {
-            cout << "File niet geopend" << endl;
-            return;//stopt het programma;
-        } //if
-        uitvoer.open ("uitvoer.txt",ios::out);
-        kar = invoer.get ( );
-        int karteller = 1;
-        
-        int len = 0, getal = 0;
-        int inpArr[10] = { };
+    string inputfile, outputfile;
+    char kar; 
+    char vorigekar = '\\';
 
-        while ( ! invoer.eof ( ) ) {
-            char vorigekar = kar; //bewaar het voorgaande karakter
-            kar = invoer.get ( );
-            if (kar == vorigekar){ //vorig en huidige karakter gelijk?
-                karteller++; //hoog dan de karteller op met 1
+	cout << "Geef uw inputfile + extensie\n";
+	cin >> inputfile;
+	cout << "Geef uw outputfile + extensie\n";
+	cin >> outputfile;
+	cout << '\n';
+
+	ifstream invoer (inputfile, std::ios::in);
+	ofstream uitvoer (outputfile, std::ios::out);
+    
+    kar = invoer.get ( );
+
+    while ( ! invoer.eof ( ) ) {
+       	int inpArr[50] = { };
+       	int karteller = 1;
+       	int len = 0;
+       	int getal = 0;
+        while(vorigekar == kar && kar != '\n') {
+           	karteller++;
+           	kar = invoer.get();
+           	if (vorigekar != kar) {
+           		uitvoer << karteller;
+           		karteller = 1;
+          	}
+        }
+        if ((kar >= '0' && kar <= '9') || kar == '\\'){ //cijfer of \?
+            if (kar == '\\') {
+               	uitvoer.put('\\');
             }
-            if (kar != vorigekar){ //karakters ongelijk?
-                if ((vorigekar >= 48 && vorigekar <= 57)
-                    || (vorigekar == 92)){ //cijfer of \?
-                    uitvoer << '\\';
-                	while (vorigekar >= 48 && vorigekar <= 57) {
-                		inpArr[len] = vorigekar;
-                		len++;
-                		kar = invoer.get();
-                	}
-                	int *p = inpArr;
-                	pointerToInt(getal, len, p);
-                	lychrelNumb(p, getal, len);
-                }
-                if (karteller == 1){ //kwam het karakter 1 keer voor?
-                    uitvoer.put (vorigekar); //laat het cijfer weg
-                }
-                else { //put anders:
-                uitvoer.put (vorigekar); //het karakter
-                uitvoer << karteller; //gevolgd door aantal keer
-                }
-                karteller = 1; //nieuw soort karakter? teller op 1
+
+            while (kar >= '0' && kar <= '9') {
+               	vorigekar = kar;
+               	kar = invoer.get();
+               	if(vorigekar == kar) {
+              		inpArr[len] = vorigekar - '0';
+           			len++;
+           			karteller++;
+           		}
+           		else if (vorigekar != kar) {
+          			inpArr[len] = vorigekar - '0';
+           			len++;
+           			uitvoer.put('\\');
+               		uitvoer.put(vorigekar);
+               		if (karteller > 1) {
+               			uitvoer << karteller;
+               			karteller = 1;
+               		}
+             	}
             }
-        } //while
-        invoer.close ( );
-        uitvoer.close ( );
+            if (len > 0) {
+            	int *arrPointer = inpArr;
+            	pointerToInt(getal, len, arrPointer);
+            	lychrelNumb(arrPointer, getal, len);
+            }
+        }
+        uitvoer.put(kar);
+        vorigekar = kar;
+        kar = invoer.get();
+    } //while
+    invoer.close ( );
+    uitvoer.close ( );
 }
 
 int main() {
