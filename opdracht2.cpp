@@ -150,6 +150,14 @@ void codeer(string inputfile, string outputfile){ //functie voor in- en output v
     uitvoer.close ( );
 }
 
+void decodeer(string inputfile, string outputfile) {
+	ifstream invoer (inputfile, std::ios::in);
+	ofstream uitvoer (outputfile, std::ios::out);
+
+	invoer.close();
+	uitvoer.close();
+}
+
 void input() {
 	string inputfile, outputfile;
 	char choice;
@@ -164,6 +172,12 @@ void input() {
 
 	if (choice == 'c') {
 		codeer(inputfile, outputfile);
+	}
+	else if (choice == 'd') {
+		decodeer(inputfile, outputfile);
+	}
+	else {
+		cout << "Vul een juiste letter in.\n";
 	}	
 }
 
