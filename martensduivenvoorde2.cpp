@@ -179,7 +179,14 @@ void decodeer(string inputfile, string outputfile) {
 			prevChar = curChar;
 			curChar = invoer.get();
 		}
-		if ((prevChar == '\\' && pprevChar == '\\') && (curChar >= '0' && curChar <= '9')) {
+		else if (curChar == '\\' && prevChar == '\\' && pprevChar == '\\') {
+			curChar = invoer.get();
+			uitvoer.put(curChar);
+			pprevChar = prevChar;
+			prevChar = curChar;
+			curChar = invoer.get();
+		}
+		else if ((prevChar == '\\' && pprevChar == '\\') && (curChar >= '0' && curChar <= '9')) {
 			amount = curChar - '0';
 			curChar = invoer.get();
 			while (curChar >= '0' && curChar <= '9') {
