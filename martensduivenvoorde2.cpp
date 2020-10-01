@@ -127,13 +127,15 @@ void codeer(string inputfile, string outputfile){
 
             while (kar >= '0' && kar <= '9') {
                	vorigekar = kar;
-               	kar = invoer.get();
-               	if(vorigekar == kar) {
+               	kar = invoer.get(); 
+               	karteller = 1;
+               	while (vorigekar == kar) {
               		inpArr[len] = vorigekar - '0';
            			len++;
            			karteller++;
+           			kar = invoer.get();
            		}
-           		else if (vorigekar != kar) {
+           		if (vorigekar != kar) {
           			inpArr[len] = vorigekar - '0';
            			len++;
            			uitvoer.put('\\');
@@ -146,7 +148,7 @@ void codeer(string inputfile, string outputfile){
                			uitvoer.put('\\');
                			karteller = 1;
                		}
-             	}
+             	} 
             }
             if (len > 0) {
             	int *arrPointer = inpArr;
@@ -163,8 +165,8 @@ void codeer(string inputfile, string outputfile){
 }
 
 void decodeer(string inputfile, string outputfile) {
-	char pprevChar = 'x';
-	char prevChar = 'x';
+	char pprevChar = '\b';
+	char prevChar = '\b';
 	char curChar;
 	int amount = 0;
 	ifstream invoer (inputfile, ios::in);
@@ -177,15 +179,29 @@ void decodeer(string inputfile, string outputfile) {
 			prevChar = curChar;
 			curChar = invoer.get();
 		}
-		else if ((prevChar != '\\' || (prevChar == '\\'
-                                 && pprevChar == '\\'))
-				&& (curChar >= '0' && curChar <= '9')) {
+		if ((prevChar == '\\' && pprevChar == '\\') && (curChar >= '0' && curChar <= '9')) {
 			amount = curChar - '0';
 			curChar = invoer.get();
 			while (curChar >= '0' && curChar <= '9') {
 				amount *= 10;
 				amount += curChar - '0';
 				curChar = invoer.get();
+			}
+			for(int i = 0; i < amount - 1; i++) {
+				uitvoer.put(prevChar);
+			}			
+		}
+		
+		else if (prevChar != '\\' && (curChar >= '0' && curChar <= '9')) {
+			amount = curChar - '0';
+			curChar = invoer.get();
+			while (curChar >= '0' && curChar <= '9') {
+				amount *= 10;
+				amount += curChar - '0';
+				curChar = invoer.get();
+			}
+			if (prevChar == '\\' && pprevChar != '\\') {
+				uitvoer.put(curChar);
 			}
 			for(int i = 0; i < amount - 1; i++) {
 				uitvoer.put(prevChar);
