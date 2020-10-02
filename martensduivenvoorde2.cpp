@@ -84,7 +84,7 @@ bool lychrelNumb(int *arrPointer, int len) {
 		} //for
 		if (palindrome(arrPointer, len)) {
 			cout << origgetal << " is geen lychrelgetal\n"
-				 << "Dit werd duidelijk na " << it << " iteraties\n\n";
+				 << "Dit werd duidelijk na " << it << " iteraties\n" << endl;
 			return true;
 			break;
 		} //if
@@ -100,7 +100,8 @@ bool lychrelNumb(int *arrPointer, int len) {
 		} //else
 	} //while
 	cout << origgetal << " is een lychrelkandidaat\n"
-		 << "Omdat er na " << it << " iteraties, INT_MAX werd bereikt\n\n";
+		 << "Omdat er na " << it << " iteraties, INT_MAX werd bereikt\n"
+		 << endl;
 	return false;
 } //lychrelNumb
 
@@ -133,7 +134,7 @@ void codeer(string inputfile, string outputfile){
 
             while (kar >= '0' && kar <= '9') {
                	vorigekar = kar;
-               	kar = invoer.get(); 
+               	kar = invoer.get();
                	karteller = 1;
                	while (vorigekar == kar) {
               		inpArr[len] = vorigekar - '0';
@@ -202,9 +203,9 @@ void decodeer(string inputfile, string outputfile) {
 			} //while
 			for(int i = 0; i < amount - 1; i++) {
 				uitvoer.put(prevChar);
-			} //for			
+			} //for
 		} //elif
-		
+
 		else if (prevChar != '\\' && (curChar >= '0' && curChar <= '9')) {
 			amount = curChar - '0';
 			curChar = invoer.get();
@@ -237,13 +238,13 @@ void input() {
 	string inputfile, outputfile;
 	char choice;
 
-	cout << "Geef uw inputfile + extensie\n";
+	cout << "Geef uw inputfile + extensie" << endl;
 	cin >> inputfile;
-	cout << "Geef uw outputfile + extensie\n";
+	cout << "Geef uw outputfile + extensie" << endl;
 	cin >> outputfile;
-	cout << "Wilt u coderen of decoderen? (c of d)\n";
+	cout << "Wilt u coderen of decoderen? (c of d)" << endl;
 	cin >> choice;
-	cout << '\n';
+	cout << endl;
 
 	if (choice == 'c') {
 		codeer(inputfile, outputfile);
@@ -252,7 +253,7 @@ void input() {
 		decodeer(inputfile, outputfile);
 	} //elif
 	else {
-		cout << "Vul een juiste letter in.\n";
+		cout << "Vul een juiste letter in." << endl;
 	} //else
 } //input
 
@@ -268,7 +269,7 @@ int main() {
 			  << "In het geval van coderen wordt er gekeken of "
 			  << "getallen in de file lychrel getallen zijn\n"
 			  << "Laatst bewerkt op 2-10-2020\n"
-			  << "______________________________\n";
+			  << "______________________________" << endl;
 	input();
 	return 0;
 } //main
